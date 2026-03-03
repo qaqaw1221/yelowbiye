@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yelowbiye — блог о заработке в интернете</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #020617;
+      --bg-alt: #020617;
+      --surface: rgba(15, 23, 42, 0.92);
+      --surface-soft: rgba(15, 23, 42, 0.8);
+      --card: #020617;
+      --accent: #facc15;
+      --accent-strong: #f97316;
+      --accent-soft: rgba(250, 204, 21, 0.14);
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --muted-soft: rgba(148, 163, 184, 0.7);
+      --border-subtle: rgba(148, 163, 184, 0.25);
+      --border-strong: rgba(148, 163, 184, 0.45);
+      --radius-lg: 22px;
+      --radius-md: 14px;
+      --shadow-soft: 0 22px 90px rgba(15, 23, 42, 0.9);
+      --glow-accent: 0 0 40px rgba(250, 204, 21, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, #312e81 0, transparent 45%),
+        radial-gradient(circle at bottom right, #0f172a 0, #000 55%);
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    .shell {
+      width: 100%;
+      max-width: 1240px;
+      background:
+        radial-gradient(circle at top left, rgba(148, 163, 184, 0.24), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.22), transparent 55%),
+        linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.96));
+      border-radius: 28px;
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 0.7),
+        0 26px 120px rgba(15, 23, 42, 1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(26px);
+      position: relative;
+      isolation: isolate;
+    }
+
+    .shell::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(250, 204, 21, 0.16), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.14), transparent 55%);
+      opacity: 0.8;
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .shell-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 22px;
+      background:
+        radial-gradient(circle at top left, rgba(15, 23, 42, 0.3), transparent 55%),
+        linear-gradient(to right, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.96));
+      border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 20% 0, #facc15, transparent 60%),
+        radial-gradient(circle at 80% 100%, #f97316, transparent 60%),
+        conic-gradient(from 210deg, #facc15, #f97316, #22c55e, #facc15);
+      box-shadow:
+        0 0 0 2px rgba(15, 23, 42, 0.95),
+        0 14px 30px rgba(250, 204, 21, 0.7);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo::after {
+      content: "";
+      position: absolute;
+      inset: 32%;
+      border-radius: inherit;
+      background: radial-gradient(circle at 30% 0, rgba(15, 23, 42, 0.6), transparent 70%);
+      mix-blend-mode: multiply;
+    }
+
+    .brand-title {
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+    }
+
+    .brand-subtitle {
+      font-size: 0.8rem;
+      color: var(--muted-soft);
+    }
+
+    .brand-badge {
+      font-size: 0.72rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.95));
+      box-shadow: 0 14px 38px rgba(15, 23, 42, 0.9);
+      white-space: nowrap;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 3.2fr) minmax(260px, 1.2fr);
+      gap: 24px;
+      padding: 20px 20px 18px;
+      position: relative;
+    }
+
+    .layout::before {
+      content: "";
+      position: absolute;
+      inset: 6% 4%;
+      border-radius: 26px;
+      border: 1px solid rgba(148, 163, 184, 0.07);
+      pointer-events: none;
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding: 18px 10px;
+      }
+      .layout {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 18px 16px 16px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        border-radius: 20px;
+      }
+      .shell-header {
+        padding-inline: 16px;
+      }
+      .layout {
+        padding: 16px 14px 14px;
+      }
+    }
+
+    .posts {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .hero-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.26em;
+      color: var(--muted-soft);
+      margin-bottom: 6px;
+    }
+
+    .hero-title {
+      font-size: clamp(1.9rem, 1.3rem + 1.7vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.04em;
+      margin-bottom: 10px;
+    }
+
+    .hero-title span {
+      background: linear-gradient(120deg, #facc15, #f97316, #22c55e);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 30px rgba(250, 204, 21, 0.5);
+    }
+
+    .hero-subtitle {
+      color: var(--muted);
+      font-size: 0.98rem;
+      max-width: 570px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .chip {
+      font-size: 0.76rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.98));
+    }
+
+    .chip-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.35);
+    }
+
+    .posts-list {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .post-card {
+      background:
+        radial-gradient(circle at top left, rgba(250, 204, 21, 0.12), transparent 55%),
+        linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.96));
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      padding: 18px 20px 18px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .post-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(250, 204, 21, 0.08), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(56, 189, 248, 0.06), transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .post-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .post-meta-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      border: 1px solid rgba(250, 204, 21, 0.75);
+      background: rgba(250, 204, 21, 0.12);
+      color: #facc15;
+    }
+
+    .post-title {
+      font-size: 1.18rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .post-intro {
+      font-size: 0.96rem;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .post-section-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      margin: 11px 0 7px;
+    }
+
+    .post-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .post-list strong {
+      color: #e5e7eb;
+    }
+
+    .post-list li {
+      font-size: 0.94rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .post-footnote {
+      margin-top: 13px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      opacity: 0.92;
+    }
+
+    .post-cta {
+      margin-top: 13px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.86rem;
+      font-weight: 500;
+      background: radial-gradient(circle at 0 0, #facc15, #f97316);
+      color: #111827;
+      box-shadow:
+        0 10px 30px rgba(250, 204, 21, 0.65),
+        0 0 0 1px rgba(15, 23, 42, 0.7);
+      transition: transform 0.14s ease-out, box-shadow 0.14s ease-out, filter 0.14s ease-out;
+      white-space: nowrap;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow:
+        0 18px 42px rgba(250, 204, 21, 0.8),
+        0 0 0 1px rgba(15, 23, 42, 0.9);
+    }
+
+    .button:active {
+      transform: translateY(0);
+      box-shadow:
+        0 5px 20px rgba(250, 204, 21, 0.65),
+        0 0 0 1px rgba(15, 23, 42, 0.9);
+    }
+
+    .button-secondary {
+      background: transparent;
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 7px 12px;
+      border: 1px dashed var(--border-strong);
+      box-shadow: none;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .sidebar-block {
+      background:
+        radial-gradient(circle at top left, rgba(250, 204, 21, 0.14), transparent 55%),
+        linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.96));
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      padding: 14px 14px 14px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 18px 60px rgba(15, 23, 42, 0.95);
+    }
+
+    .sidebar-block::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(250, 204, 21, 0.18), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.18), transparent 55%);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .sidebar-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .sidebar-label {
+      font-size: 0.76rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted-soft);
+      margin-bottom: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .sidebar-label-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #facc15;
+      box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.5);
+    }
+
+    .ad-slot {
+      border-radius: var(--radius-md);
+      padding: 12px 12px 12px;
+      background:
+        radial-gradient(circle at top left, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 1));
+      border: 1px dashed var(--border-strong);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .ad-placeholder-title {
+      font-size: 0.94rem;
+      font-weight: 600;
+    }
+
+    .ad-placeholder-subtitle {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .ad-size {
+      font-size: 0.76rem;
+      color: var(--muted);
+      opacity: 0.9;
+    }
+
+    .ad-demo-tag {
+      align-self: flex-start;
+      margin-top: 4px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      background: rgba(15, 23, 42, 0.98);
+      border: 1px solid var(--border-strong);
+      color: var(--muted);
+    }
+
+    .sidebar-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .sidebar-note span {
+      color: #e5e7eb;
+    }
+
+    .sidebar-list {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .sidebar-list li::before {
+      content: "•";
+      margin-right: 4px;
+      color: #facc15;
+    }
+
+    .footer {
+      padding: 10px 20px 14px;
+      border-top: 1px solid rgba(15, 23, 42, 0.98);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 1));
+    }
+
+    .footer span strong {
+      color: #e5e7eb;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .footer-pill {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+    }
+
+    @media (max-width: 640px) {
+      .footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="shell-header">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div class="brand-title">Yelowbiye</div>
+          <div style="font-size: 0.78rem; color: var(--muted)">первые деньги в онлайне — без сложностей</div>
+        </div>
+      </div>
+      <div class="brand-badge">Блог о заработке</div>
+    </header>
+
+    <section class="layout">
+      <section class="posts" aria-label="Список статей">
+        <div>
+          <div class="hero-label">Свежий материал</div>
+          <h1 class="hero-title">
+            5 способов заработать первые <span>10&nbsp;$</span> в интернете
+          </h1>
+          <p class="hero-subtitle">
+            Подборка простых и честных способов заработать, даже если у тебя нет опыта, портфолио и сложных навыков.
+          </p>
+          <div class="hero-meta">
+            <div class="chip">
+              <span class="chip-dot"></span>
+              Для новичков
+            </div>
+            <div class="chip">⏱ 7–15 минут в день</div>
+            <div class="chip">💵 Цель: первые 10&nbsp;долларов</div>
+          </div>
+        </div>
+
+        <div class="posts-list">
+          <article class="post-card">
+            <div class="post-inner">
+              <div class="post-meta">
+                <div class="post-meta-left">
+                  <span class="badge">Гайд</span>
+                  <span>Чтение: ~7 минут</span>
+                </div>
+                <span>Обновлено: 03.03.2026</span>
+              </div>
+
+              <h2 class="post-title">5 СПОСОБОВ ЗАРАБОТАТЬ ПЕРВЫЕ 10 ДОЛЛАРОВ В ИНТЕРНЕТЕ</h2>
+              <p class="post-intro">
+                Ниже — понятные и легальные способы заработать первые деньги в онлайне. Это не «волшебные кнопки», а
+                реальные действия, которые можно сделать с нуля, используя привычные приложения: браузер, Google Таблицы,
+                заметки, простые редакторы картинок и менеджеры задач.
+              </p>
+
+              <h3 class="post-section-title">1. Микрозадания на фриланс‑биржах</h3>
+              <ul class="post-list">
+                <li>
+                  <strong>Суть:</strong> берёшь самые простые задачи: найти информацию, собрать список в
+                  Google Таблицах, скопировать текст в нужный формат, переписать описание товара и т.п.
+                </li>
+                <li>
+                  <strong>Чем пользоваться:</strong> для выполнения заданий подойдут обычный браузер, Google Таблицы
+                  или Excel, заметки (Notion, Google Keep) и мессенджер, где ты общаешься с заказчиком.
+                </li>
+                <li>
+                  <strong>Как выйти на 10&nbsp;$:</strong> делай ставку на количество: 5–10 микро‑заказов по 1–3&nbsp;$,
+                  оперативный ответ в чате и аккуратное выполнение ТЗ.
+                </li>
+              </ul>
+
+              <h3 class="post-section-title">2. Переводы и правка текстов</h3>
+              <ul class="post-list">
+                <li>
+                  <strong>Если знаешь английский или другой язык:</strong> начинай с коротких задач: переводы
+                  небольших писем, описаний, постов. Удобно делать это в Google Документах — там удобно править и
+                  оставлять комментарии.
+                </li>
+                <li>
+                  <strong>Если уровень языка базовый:</strong> можно предлагать вычитку текстов на родном языке:
+                  исправление опечаток, оформление под заголовки, разбивка на абзацы. Подойдут приложения‑редакторы
+                  и проверка орфографии в браузере.
+                </li>
+                <li>
+                  <strong>Стратегия:</strong> делай отдельную папку в Google Диске с примерами своих работ, отправляй
+                  ссылку потенциальным заказчикам и обязательно проси короткий отзыв после каждой выполненной задачи.
+                </li>
+              </ul>
+
+              <h3 class="post-section-title">3. Создание простых визуалов (баннеры, обложки)</h3>
+              <ul class="post-list">
+                <li>
+                  <strong>Инструменты:</strong> онлайн‑редакторы вроде Canva и её аналогов — там есть готовые шаблоны,
+                  и не нужно уметь профессиональный дизайн, всё собирается «из кубиков».
+                </li>
+                <li>
+                  <strong>Что можно делать:</strong> обложки для YouTube, превью для Reels/Shorts, баннеры для постов
+                  в Instagram, простые рекламные карточки для сторис.
+                </li>
+                <li>
+                  <strong>Как заработать первые 10&nbsp;$:</strong> собери 3–5 примеров в один файл или папку,
+                  покажи в соцсетях и чатах, предложи сделать «обложку под ключ» за 3–5&nbsp;$ и сделай несколько
+                  таких заказов.
+                </li>
+              </ul>
+
+              <h3 class="post-section-title">4. Платные опросы и тестирование сервисов</h3>
+              <ul class="post-list">
+                <li>
+                  <strong>Суть:</strong> ты заполняешь анкеты, делишься мнением о продуктах или тестируешь новые сайты
+                  и приложения, а взамен получаешь небольшую оплату.
+                </li>
+                <li>
+                  <strong>Чем пользоваться:</strong> нужны только браузер и электронная почта. Некоторые сервисы имеют
+                  свои мобильные приложения, где удобно отвечать на вопросы «на ходу».
+                </li>
+                <li>
+                  <strong>План:</strong> заведи отдельный адрес почты для опросов, подпишись на несколько надёжных
+                  платформ и раз в день проверяй новые задания, чтобы не пропускать доступные опросы.
+                </li>
+              </ul>
+
+              <h3 class="post-section-title">5. Продажа готовых файлов и мини‑продуктов</h3>
+              <ul class="post-list">
+                <li>
+                  <strong>Идеи:</strong> чек‑листы (например, в Google Документах), шаблоны таблиц в Google Таблицах,
+                  готовые планы тренировок, списки идей контента, простые PDF‑гайды.
+                </li>
+                <li>
+                  <strong>Инструменты:</strong> Google Документы, Google Таблицы, бесплатные редакторы PDF. Готовый
+                  файл можно хранить в облаке и выдавать покупателю ссылку на скачивание.
+                </li>
+                <li>
+                  <strong>Как начать:</strong> выбери одну тему, в которой разбираешься, собери понятный файл
+                  (без лишней воды), поставь цену 3–5&nbsp;$ и размести предложение в своих соцсетях или на платформе
+                  для цифровых товаров.
+                </li>
+              </ul>
+
+              <p class="post-footnote">
+                ⚠️ Помни: не вкладывай деньги в сомнительные схемы, «волшебные приложения» и обещания быстрого заработка
+                без действий. Держись проверенных инструментов (из этого списка) и простых шагов, которые ты реально
+                контролируешь.
+              </p>
+
+              <div class="post-cta">
+                <button class="button" type="button">
+                  Начать с первого способа
+                </button>
+                <button class="button-secondary" type="button">
+                  Сохранить статью себе
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <aside class="sidebar" aria-label="Рекламные блоки и полезная информация">
+        <section class="sidebar-block">
+          <div class="sidebar-inner">
+            <div class="sidebar-label">
+              <span class="sidebar-label-dot"></span>
+              Рекламный блок #1
+            </div>
+            <div class="ad-slot" aria-label="Рекламное место 300x250">
+              <div class="ad-placeholder-title">Ваш баннер 300×250</div>
+              <div class="ad-placeholder-subtitle">
+                Здесь можно разместить партнёрскую рекламу, баннер сервиса или своё предложение.
+              </div>
+              <div class="ad-size">Формат: 300×250, JPG/PNG или вставка кода от рекламной сети.</div>
+              <div class="ad-demo-tag">демо‑место под рекламу</div>
+            </div>
+            <p class="sidebar-note">
+              <span>Подсказка:</span> когда подключишь рекламную сеть или партнёрку, просто замени этот блок на их код.
+            </p>
+          </div>
+        </section>
+
+        <section class="sidebar-block">
+          <div class="sidebar-inner">
+            <div class="sidebar-label">
+              <span class="sidebar-label-dot"></span>
+              Рекламный блок #2
+            </div>
+            <div class="ad-slot" aria-label="Горизонтальный рекламный баннер">
+              <div class="ad-placeholder-title">Широкий баннер 728×90</div>
+              <div class="ad-placeholder-subtitle">
+                Отлично подходит для верхней части сайта или промо собственного продукта.
+              </div>
+              <div class="ad-size">Формат: 728×90, адаптивный баннер или текстовый блок.</div>
+            </div>
+            <ul class="sidebar-list">
+              <li>можно добавить счётчик кликов</li>
+              <li>использовать партнёрские ссылки</li>
+              <li>тестировать разные офферы</li>
+            </ul>
+          </div>
+        </section>
+      </aside>
+    </section>
+
+    <footer class="footer">
+      <span>© <strong>Yelowbiye</strong>. Первые шаги в онлайн‑заработке — без иллюзий и без обмана.</span>
+      <div class="footer-links">
+        <span class="footer-pill">Посты о честных способах заработка</span>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>
+
